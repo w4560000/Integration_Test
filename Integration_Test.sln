@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Temp", "Temp", "{D008630B-AD03-4EC3-9610-C000ED49D463}"
+	ProjectSection(SolutionItems) = preProject
+		Temp\OrderTable.sql = Temp\OrderTable.sql
+		Temp\Test_Database_Init.sql = Temp\Test_Database_Init.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration Test", "Integration_Test\Integration Test.csproj", "{613E78E1-91C8-4DC7-8534-3159365E6B18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{613E78E1-91C8-4DC7-8534-3159365E6B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{613E78E1-91C8-4DC7-8534-3159365E6B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{613E78E1-91C8-4DC7-8534-3159365E6B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{613E78E1-91C8-4DC7-8534-3159365E6B18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F180BC9D-1D88-4A4E-8092-EF2C52F004AF}
+	EndGlobalSection
+EndGlobal
