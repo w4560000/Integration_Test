@@ -6,12 +6,14 @@ pid=$!
 # Wait for it to be available
 echo "Waiting for MS SQL to be available ⏳"
 
+SA_PASSWORD="Aa123456"
+
 # 1. 確認服務是否啟動
-/opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P ${SA_PASSWORD} -Q "SET NOCOUNT ON SELECT N'MS SQL is available 🔥' , @@servername"
+/opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h -1 -U sa -P ${SA_PASSWORD} -Q "SET NOCOUNT ON SELECT N'MS SQL is available 🔥' , @@servername"
 is_up=$?
 while [ $is_up -ne 0 ] ; do 
     echo -e $(date) 
-    /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P ${SA_PASSWORD} -Q "SET NOCOUNT ON SELECT N'MS SQL is available 🔥' , @@servername"
+    /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h -1 -U sa -P ${SA_PASSWORD} -Q "SET NOCOUNT ON SELECT N'MS SQL is available 🔥' , @@servername"
     is_up=$?
     sleep 5 
 done

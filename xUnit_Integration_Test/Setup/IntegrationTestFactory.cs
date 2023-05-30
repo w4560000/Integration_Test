@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using System.Data.SqlClient;
 using Testcontainers.MsSql;
-using Xunit;
 
 namespace xUnit_Integration_Test.Setup
 {
@@ -16,11 +15,12 @@ namespace xUnit_Integration_Test.Setup
 
         public IntegrationTestFactory()
         {
-            var a = Path.GetDirectoryName(Directory.GetCurrentDirectory()); // AppContext.BaseDirectory;
             try
             {
                 _container = new MsSqlBuilder().WithImage("mcr.microsoft.com/mssql/server:2019-latest")
+                                               .WithPassword("Aa123456")
                                                .WithBindMount("C:\\Integration_Test\\MSSQL", "/MSSQL") // todo - 取絕對位址
+                                               .WithCommand("/bin/bash", "-c", "/MSSQL/entrypoint.sh")
                                                .Build();
             }
             catch (Exception ex)
@@ -42,9 +42,15 @@ namespace xUnit_Integration_Test.Setup
         public async Task InitializeAsync()
         {
             await _container.StartAsync();
-            await _container.ExecAsync(new List<string>() { "bash /MSSQL/entrypoint.sh" }); // todo - entrypoint.sh 沒有執行 待查
         }
 
         public new async Task DisposeAsync() => await _container.DisposeAsync();
+
+        public async Task<IntegrationTestFactory<TProgram>> ExecSqlCommandAsync(string command)
+        {
+            await _container.ExecAsync(new List<string>() { command });
+
+            return this;
+        }
     }
 }

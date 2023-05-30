@@ -12,15 +12,18 @@ namespace xUnit_Integration_Test
         public OrderServiceTest(IntegrationTestFactory<Program> integrationTestFactory)
         {
             _integrationTestFactory = integrationTestFactory;
+
+
         }
 
         [Fact]
         public async Task Test1()
         {
             var client = _integrationTestFactory.CreateClient();
+            await _integrationTestFactory.ExecSqlCommandAsync("INSERT INTO [Test].[dbo].[Order] (Price, CreateDate) VALUES (100, GETDATE());"); // todo 仍不會產假資料
 
             // Arrange
-            var getAllOrderReponse = await client.GetFromJsonAsync<List<OrderEntity>>("/Order/GetAllOrder");
+            var getAllOrderReponse = await client.GetFromJsonAsync<List<OrderEntity>>("api/Order/GetAllOrder");
 
             // Assert
             Assert.NotNull(getAllOrderReponse);
