@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Integration_Test.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
