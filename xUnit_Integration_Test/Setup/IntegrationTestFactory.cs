@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DotNet.Testcontainers.Builders;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -20,8 +21,8 @@ namespace xUnit_Integration_Test.Setup
             {
                 _container = new MsSqlBuilder().WithImage("mcr.microsoft.com/mssql/server:2019-latest")
                                                .WithPassword("Aa123456")
-                                               .WithBindMount("C:\\Integration_Test\\MSSQL", "/MSSQL") // todo - 取絕對位址
-                                               .WithCommand("/bin/bash", "-c", "/MSSQL/entrypoint.sh")
+                                               .WithBindMount(Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\..\MSSQL")), "/MSSQL")
+                                               .WithWaitStrategy(Wait.ForUnixContainer().UntilCommandIsCompleted("/bin/bash", "-c", "/MSSQL/entrypoint.sh"))
                                                .Build();
             }
             catch (Exception ex)
@@ -50,7 +51,7 @@ namespace xUnit_Integration_Test.Setup
         public IntegrationTestFactory<TProgram> ExecSqlCommand(string command)
         {
             using (var cn = new SqlConnection(_container.GetConnectionString()))
-            cn.Execute(command);
+                cn.Execute(command);
 
             return this;
         }

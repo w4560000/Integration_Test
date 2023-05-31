@@ -1,8 +1,7 @@
 ﻿#!/bin/sh
 
 # Launch MSSQL and send to background
-/opt/mssql/bin/sqlservr &
-pid=$!
+/opt/mssql/bin/sqlservr
 # Wait for it to be available
 echo "Waiting for MS SQL to be available ⏳"
 
@@ -41,6 +40,3 @@ do
     /opt/mssql-tools/bin/sqlcmd -U sa -P ${SA_PASSWORD} -l 30 -e -i ${foo}
     echo "Execute ${foo} completed successfully 🌳";
 done
-
-# Wait on the sqlserver process
-wait $pid
