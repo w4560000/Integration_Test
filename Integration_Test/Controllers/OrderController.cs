@@ -20,6 +20,44 @@ namespace Integration_Test.Controllers
         }
 
         /// <summary>
+        /// 取得所有訂單
+        /// </summary>
+        [HttpGet("[Action]")]
+        public IActionResult GetAllOrder()
+        {
+            try
+            {
+                List<OrderEntity> orderList = _orderService.GetAllOrder();
+
+                return Ok(orderList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"GetAllOrder Error: {ex}");
+                return BadRequest("Error");
+            }
+        }
+
+        /// <summary>
+        /// 取得訂單
+        /// </summary>
+        [HttpGet("[Action]")]
+        public IActionResult GetOrder(int orderID)
+        {
+            try
+            {
+                OrderEntity? order = _orderService.GetOrder(orderID);
+
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"GetOrder Error: {ex}");
+                return BadRequest("Error");
+            }
+        }
+
+        /// <summary>
         /// 新增訂單
         /// </summary>
         [HttpGet("[Action]")]
@@ -81,25 +119,6 @@ namespace Integration_Test.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"DeleteOrder Error: {ex}");
-                return BadRequest("Error");
-            }
-        }
-
-        /// <summary>
-        /// 取得所有訂單
-        /// </summary>
-        [HttpGet("[Action]")]
-        public IActionResult GetAllOrder()
-        {
-            try
-            {
-                List<OrderEntity> orderList = _orderService.GetAllOrder();
-
-                return Ok(orderList);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"GetAllOrder Error: {ex}");
                 return BadRequest("Error");
             }
         }

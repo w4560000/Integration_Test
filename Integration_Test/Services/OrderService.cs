@@ -31,7 +31,7 @@ namespace Integration_Test.Services
                     CreateDate = DateTime.Now
                 };
 
-                return this._conn.Execute("INSERT INTO [dbo].[Order] (Price, CreateDate) values (@Price, @CreateDate)", order) > 0;
+                return this._conn.Execute("INSERT INTO [Test].[dbo].[Order] (Price, CreateDate) VALUES (@Price, @CreateDate)", order) > 0;
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace Integration_Test.Services
         {
             try
             {
-                return this._conn.Execute("Update [dbo].[Order] Set Price = @price WHERE OrderID = @orderID", new { orderID, price }) > 0;
+                return this._conn.Execute("UPDATE [Test].[dbo].[Order] SET Price = @price WHERE OrderID = @orderID", new { orderID, price }) > 0;
             }
             catch (Exception ex)
             {
@@ -63,11 +63,27 @@ namespace Integration_Test.Services
         {
             try
             {
-                return this._conn.Execute("DELETE [dbo].[Order] WHERE OrderID = @orderID", new { orderID }) > 0;
+                return this._conn.Execute("DELETE [Test].[dbo].[Order] WHERE OrderID = @orderID", new { orderID }) > 0;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"DeleteOrder Error: {ex}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 取得訂單
+        /// </summary>
+        public OrderEntity? GetOrder(int orderID)
+        {
+            try
+            {
+                return this._conn.Query<OrderEntity>(@"SELECT OrderID, Price, CreateDate FROM [Test].[dbo].[Order] WHERE OrderID = @orderID", new { orderID }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"GetAllOrder Error: {ex}");
                 throw;
             }
         }
@@ -79,7 +95,7 @@ namespace Integration_Test.Services
         {
             try
             {
-                return this._conn.Query<OrderEntity>(@"SELECT OrderID, Price, CreateDate FROM [dbo].[Order]").ToList();
+                return this._conn.Query<OrderEntity>(@"SELECT OrderID, Price, CreateDate FROM [Test].[dbo].[Order]").ToList();
             }
             catch (Exception ex)
             {

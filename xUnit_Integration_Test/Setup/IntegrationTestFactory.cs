@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Dapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,9 +47,10 @@ namespace xUnit_Integration_Test.Setup
 
         public new async Task DisposeAsync() => await _container.DisposeAsync();
 
-        public async Task<IntegrationTestFactory<TProgram>> ExecSqlCommandAsync(string command)
+        public IntegrationTestFactory<TProgram> ExecSqlCommand(string command)
         {
-            await _container.ExecAsync(new List<string>() { command });
+            using (var cn = new SqlConnection(_container.GetConnectionString()))
+            cn.Execute(command);
 
             return this;
         }

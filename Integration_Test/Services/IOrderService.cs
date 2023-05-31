@@ -20,6 +20,11 @@ namespace Integration_Test.Services
         bool DeleteOrder(int orderID);
 
         /// <summary>
+        /// 取得訂單
+        /// </summary>
+        OrderEntity? GetOrder(int orderID);
+
+        /// <summary>
         /// 取得所有訂單
         /// </summary>
         List<OrderEntity> GetAllOrder();
